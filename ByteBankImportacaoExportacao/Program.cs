@@ -8,34 +8,41 @@ using System.Threading.Tasks;
 
 namespace ByteBankImportacaoExportacao
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
-            var enderecoDoArquivo = @"Data\contas.txt";
+            //LidandoComFileStreamDiretamente();
+            //UsandoStreamReader();
+            //CriarArquivo();
+            //EscritaBinaria();
+            //LeituraBinaria();
+            //UsarStreamDeEntrada();
 
-            var fluxoDoArquivo = new FileStream(enderecoDoArquivo, FileMode.Open);
+            File.WriteAllText("escrevendoComAClasseFile.txt", "Testando File.WriteAllText");
+            Console.WriteLine("Arquivo escrevendoComAClasseFile criado!");
 
-            var buffer = new byte[1024]; // 1 kb
-            var numeroDeBytesLidos = -1;
+            var bytesArquivo = File.ReadAllBytes("contas.txt");
+            Console.WriteLine($"Arquivo contas.txt possui{ bytesArquivo.Length} bytes");
 
-            while (numeroDeBytesLidos != 0)
+            var linhas = File.ReadAllLines("contas.txt");
+            Console.WriteLine(linhas.Length);
+
+            foreach (var linha in linhas)
             {
-                numeroDeBytesLidos = fluxoDoArquivo.Read(buffer, 0, 1024);
-                EscreverBuffer(buffer);
+                Console.WriteLine(linha);
             }
 
+
+            Console.WriteLine("Aplicação finalizada...");
+
+
             Console.ReadLine();
+
+
         }
 
-        static void EscreverBuffer(byte[] buffer)
-        {
-            var utf8 = Encoding.Default;
+        
 
-            var text = utf8.GetString(buffer);
-            Console.Write(text);
-
-            
-        }
     }
 }
